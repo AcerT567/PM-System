@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Patients</h2>
+
+  <form method="get" class="search-form" style="margin-bottom:0.5rem">
+    <input type="text" name="q" placeholder="Search name, phone, email..." value="{{ q }}">
+    <select name="gender">
+      <option value="">All genders</option>
+      <option value="Male" {% if gender=='Male' %}selected{% endif %}>Male</option>
+      <option value="Female" {% if gender=='Female' %}selected{% endif %}>Female</option>
+      <option value="Other" {% if gender=='Other' %}selected{% endif %}>Other</option>
+    </select>
+    <button type="submit">Search</button>
+    <a href="{{ url_for('export_patients') }}">Export Patients CSV</a> |
+    <a href="{{ url_for('export_notes') }}">Export Notes CSV</a> |
+    <a href="{{ url_for('import_patients') }}">Import Patients</a> |
+    {% if current_user.role == 'doctor' %}<a href="{{ url_for('import_notes') }}">Import Notes</a>{% endif %}
+  </form>
+
+  {% if patients %}
+    <table>
+      <tr><th>ID</th><th>Name</th><th>Created</th><th>Actions</th></tr>
+      {% for p in patients %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.first_name }} {{ p.last_name }}</td>
+          <td>{{ p.created_at.strftime('%Y-%m-%d') }}</td>
+          <td>
+            <a href="{{ url_for('view_patient', pid=p.id) }}">View</a> |
+            <a href="{{ url_for('edit_patient', pid=p.id) }}">Edit</a> |
+            <form action="{{ url_for('delete_patient', pid=p.id) }}" method="post" style="display:inline" onsubmit="return confirm('Delete patient?');">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <div class="pagination">
+      {% if page > 1 %}
+        <a href="{{ url_for('index', page=page-1, q=q, gender=gender) }}">&laquo; Prev</a>
+      {% endif %}
+      <span>Page {{ page }} of {{ total_pages }}</span>
+      {% if page < total_pages %}
+        <a href="{{ url_for('index', page=page+1, q=q, gender=gender) }}">Next &raquo;</a>
+      {% endif %}
+    </div>
+
+  {% else %}
+    <p>No patients found. <a href="{{ url_for('new_patient') }}">Create one</a>.</p>
+  {% endif %}
+{% endblock %}

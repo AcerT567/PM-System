@@ -1,0 +1,10 @@
+Flask==2.3.3
+Werkzeug==2.3.7
+Flask-Login==0.6.2
+Flask-WTF==1.1.1
+SQLAlchemy==1.4.49
+email-validator==2.0.0
+WTForms==3.0.1
+Flask-Talisman==1.0.0
+itsdangerous==2.2.0
+gunicorn

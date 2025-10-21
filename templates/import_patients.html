@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Import Patients (CSV)</h2>
+  <form method="post" enctype="multipart/form-data">
+    <p>Select CSV file: <input type="file" name="file" accept=".csv" required></p>
+    <p><button type="submit">Upload</button></p>
+  </form>
+  <p>Expected columns: first_name,last_name,dob,gender,phone,email,address (header row recommended)</p>
+{% endblock %}

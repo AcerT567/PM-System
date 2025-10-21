@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ action }}</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <p>{{ form.first_name.label }}<br>{{ form.first_name() }}</p>
+    <p>{{ form.last_name.label }}<br>{{ form.last_name() }}</p>
+    <p>{{ form.dob.label }}<br>{{ form.dob() }}</p>
+    <p>{{ form.gender.label }}<br>{{ form.gender() }}</p>
+    <p>{{ form.phone.label }}<br>{{ form.phone() }}</p>
+    <p>{{ form.email.label }}<br>{{ form.email() }}</p>
+    <p>{{ form.address.label }}<br>{{ form.address(rows=3) }}</p>
+    <p>{{ form.submit() }}</p>
+  </form>
+{% endblock %}

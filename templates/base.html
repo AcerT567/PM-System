@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Patient Management System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Patient Management System</h1>
+    {% if current_user.is_authenticated %}
+      <div class="nav">
+        <a href="{{ url_for('index') }}">Home</a> |
+        <a href="{{ url_for('new_patient') }}">New Patient</a> |
+        {% if current_user.role == 'admin' %}<a href="{{ url_for('list_users') }}">Users</a> |{% endif %}
+        <a href="{{ url_for('logout') }}">Logout ({{ current_user.username }})</a>
+      </div>
+    {% else %}
+      <div class="nav">
+        <a href="{{ url_for('login') }}">Login</a> |
+        <a href="{{ url_for('register') }}">Register</a>
+      </div>
+    {% endif %}
+  </header>
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer>
+    <p>&copy; Patient Management System</p>
+  </footer>
+</body>
+</html>

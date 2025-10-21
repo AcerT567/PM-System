@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ action }} for {{ patient.first_name }} {{ patient.last_name }}</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <p>{{ form.title.label }}<br>{{ form.title() }}</p>
+    <p>{{ form.body.label }}<br>{{ form.body(rows=6) }}</p>
+    <p>{{ form.submit() }}</p>
+  </form>
+{% endblock %}
