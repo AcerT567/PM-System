@@ -1,41 +1,53 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Patient Management System</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>St. Vincent Hospital</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <header>
-    <h1>Patient Management System</h1>
-    {% if current_user.is_authenticated %}
-      <div class="nav">
-        <a href="{{ url_for('index') }}">Home</a> |
-        <a href="{{ url_for('new_patient') }}">New Patient</a> |
-        {% if current_user.role == 'admin' %}<a href="{{ url_for('list_users') }}">Users</a> |{% endif %}
-        <a href="{{ url_for('logout') }}">Logout ({{ current_user.username }})</a>
-      </div>
-    {% else %}
-      <div class="nav">
-        <a href="{{ url_for('login') }}">Login</a> |
-        <a href="{{ url_for('register') }}">Register</a>
-      </div>
-    {% endif %}
+
+  <!-- Sticky Transparent Header -->
+  <header id="main-header">
+    <div class="logo-area">
+      <a href="/" class="logo-link">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" 
+             alt="St. Vincent Hospital Logo">
+      </a>
+      <h1>St. Vincent Hospital</h1>
+    </div>
+    <nav class="nav">
+      <a href="/">Home</a> |
+      <a href="/about">About</a> |
+      <a href="/services">Services</a> |
+      <a href="/contact">Contact</a>
+    </nav>
   </header>
+
+  <!-- Page Content -->
   <main>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul class="flashes">
-          {% for category, message in messages %}
-            <li class="{{ category }}">{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
+    {% block content %}
+    <h2>Welcome to St. Vincent Hospital</h2>
+    <p>Your health and wellness are our top priorities.</p>
+    {% endblock %}
   </main>
+
+  <!-- Footer (optional) -->
   <footer>
-    <p>&copy; Patient Management System</p>
+    <p>&copy; 2025 St. Vincent Hospital. All rights reserved.</p>
   </footer>
+
+  <!-- JavaScript for Shrinking Header -->
+  <script>
+    window.addEventListener("scroll", function() {
+      const header = document.getElementById("main-header");
+      if (window.scrollY > 50) {
+        header.classList.add("shrink");
+      } else {
+        header.classList.remove("shrink");
+      }
+    });
+  </script>
 </body>
 </html>
